@@ -2,29 +2,37 @@ var http = require('http');
 var fs = require('fs');
 var url = require('url');
 var path = require('path');
-//var formidable = require("formidable");
+var formidable = require("formidable");
 var util = require('util');
 const spawn = require('child_process').spawn;
 // Create a server
-// http.createServer( function (request, response) {  
-//     if (request.method.toLowerCase() == 'get') {
-//         display(request,response);
-//     } else if (request.method.toLowerCase() == 'post') {
-//         processAllFieldsOfTheForm(request, response);
-//     }
-// }).listen(8019);
+http.createServer( function (request, response) {  
+    if (request.method.toLowerCase() == 'get') {
+        display(request,response);
+    } else if (request.method.toLowerCase() == 'post') {
+        processAllFieldsOfTheForm(request, response);
+    }
+}).listen(1339);
 
-http.createServer(function (req, res) {
+function display(req,res) {
 
     if(req.url.indexOf('.html') != -1){ //req.url has the pathname, check if it conatins '.html'
-
-      fs.readFile(__dirname + '/examples/dashboard.html', function (err, data) {
-        if (err) console.log(err);
-        res.writeHead(200, {'Content-Type': 'text/html'});
-        res.write(data);
-        res.end();
-      });
-
+      if(req.url.indexOf('/examples/dashboard.html') != -1){
+        fs.readFile(__dirname + '/examples/dashboard.html', function (err, data) {
+          if (err) console.log(err);
+          res.writeHead(200, {'Content-Type': 'text/html'});
+          res.write(data);
+          res.end();
+        });
+      }
+      if(req.url.indexOf('/examples/index.html') != -1){
+        fs.readFile(__dirname + '/examples/index.html', function (err, data) {
+          if (err) console.log(err);
+          res.writeHead(200, {'Content-Type': 'text/html'});
+          res.write(data);
+          res.end();
+        });
+      }
     }
 
     if(req.url.indexOf('.js') != -1){ //req.url has the pathname, check if it conatins '.js'
@@ -122,36 +130,37 @@ http.createServer(function (req, res) {
         });
       }
     }
-}).listen(1339);
-
-
-function display(request,response){
-    // Parse the request containing file name
-   var pathname = url.parse(request.url).pathname;
-   
-   // Print the name of the file for which request is made.
-   console.log("Request for " + pathname + " received.");
-   
-   // Read the requested file content from file system
-   fs.readFile(pathname.substr(1), function (err, data) {
-      if (err) {
-         console.log(err);
-         // HTTP Status: 404 : NOT FOUND
-         // Content Type: text/plain
-         response.writeHead(404, {'Content-Type': 'text/html'});
-      }else {	
-         //Page found	  
-         // HTTP Status: 200 : OK
-         // Content Type: text/plain
-         response.writeHead(200, {'Content-Type': 'text/html'});	
-         
-         // Write the content of the file to response body
-         response.write(data.toString());		
-      }
-      // Send the response body 
-      response.end();
-    });     
 }
+// }).listen(1339);
+
+
+// function display(request,response){
+//     // Parse the request containing file name
+//    var pathname = url.parse(request.url).pathname;
+   
+//    // Print the name of the file for which request is made.
+//    console.log("Request for " + pathname + " received.");
+   
+//    // Read the requested file content from file system
+//    fs.readFile(pathname.substr(1), function (err, data) {
+//       if (err) {
+//          console.log(err);
+//          // HTTP Status: 404 : NOT FOUND
+//          // Content Type: text/plain
+//          response.writeHead(404, {'Content-Type': 'text/html'});
+//       }else {	
+//          //Page found	  
+//          // HTTP Status: 200 : OK
+//          // Content Type: text/plain
+//          response.writeHead(200, {'Content-Type': 'text/html'});	
+         
+//          // Write the content of the file to response body
+//          response.write(data.toString());		
+//       }
+//       // Send the response body 
+//       response.end();
+//     });     
+// }
 
 function processAllFieldsOfTheForm(req, res) {
     var form = new formidable.IncomingForm();
@@ -166,17 +175,17 @@ function processAllFieldsOfTheForm(req, res) {
         res.write('\n\n');
         console.log("whatup");
         fs.writeFileSync("url.txt",fields.ss);
-        const execFile = require('child_process').execFile;
-        const spawn = require('child_process').spawn;
-        const ls = spawn('scrapy', ['crawl', 'mygov_spider']);
+        // const execFile = require('child_process').execFile;
+        // const spawn = require('child_process').spawn;
+        // const ls = spawn('scrapy', ['crawl', 'mygov_spider']);
 
-        ls.stdout.on('data', (data) => {
-        console.log(`stdout: ${data}`);
-        });
+        // ls.stdout.on('data', (data) => {
+        // console.log(`stdout: ${data}`);
+        // });
 
-        ls.stderr.on('data', (data) => {
-        console.log(`stderr: ${data}`);
-        });
+        // ls.stderr.on('data', (data) => {
+        // console.log(`stderr: ${data}`);
+        // });
 
         ls.on('close', (code) => {
         console.log(`child process exited with code ${code}`);
