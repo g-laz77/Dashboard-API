@@ -348,3 +348,24 @@ function debounce(func, wait, immediate) {
 		if (immediate && !timeout) func.apply(context, args);
 	};
 };
+function readTextFile() {
+			var file = new XMLHttpRequest();
+			file.open("GET", "../url.txt", false);
+			
+			console.log(file.responseText)
+			var traffic,sources = ""
+			file.onreadystatechange = function () {
+				if (file.readyState === 4) {
+					if (file.status === 200 || file.status == 0) {
+						traffic = "https://widget.similarweb.com/traffic/".concat(file.responseText);
+						document.getElementById("api1").src = traffic;
+						sources = "https://widget.similarweb.com/sources/".concat(file.responseText);
+						document.getElementById("api2").src = sources;
+						// console.log(allText)
+						// return allText
+					}
+				}
+			}
+			file.send(null);
+			// return allText
+		}
