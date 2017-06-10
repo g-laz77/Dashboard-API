@@ -2,6 +2,8 @@ var http = require('http');
 var fs = require('fs');
 var url = require('url');
 var path = require('path');
+var request = require('request');
+var cheerio = require('cheerio');
 var formidable = require("formidable");
 var util = require('util');
 const spawn = require('child_process').spawn;
@@ -27,6 +29,32 @@ function display(req,res) {
     }
     if(req.url.indexOf('.html') != -1){ //req.url has the pathname, check if it conatins '.html'
       if(req.url.indexOf('/examples/dashboard.html') != -1){
+        var domain = "";
+        fs.readFile('../url.txt', 'utf8', function (err,data) {
+          if (err) {
+            return console.log(err);
+          }
+          domain.concat(data);
+        });
+        var url = 'http://www.valbot.com/'.concat(domain);
+        request(url, function (error, response, body) {
+          console.log('error:', error); // Print the error if one occurred 
+          console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
+          var array = [];
+          var $ = cheerio.load(body);
+            $('div.panel').each(function(i, element){
+                //console.log(this)
+                var number = $(element).children().first().next().children().eq(0).text()
+                var name = $(element).children().first().next().children().eq(1).text()
+                var metadata = {
+                    Type: name,
+                    Number: number,
+                };
+                array.push(metadata)
+                
+            });
+            console.log(array);
+        });
         fs.readFile(__dirname + '/examples/dashboard.html', function (err, data) {
           if (err) console.log(err);
           res.writeHead(200, {'Content-Type': 'text/html'});
