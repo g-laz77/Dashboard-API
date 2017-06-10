@@ -28,7 +28,8 @@
 		function readTextFile() {
 			var file = new XMLHttpRequest();
 			file.open("GET", "../url.txt", false);
-			
+			var file2 = new XMLHttpRequest();
+			var file3 = new XMLHttpRequest();
 			console.log(file.responseText)
 			var traffic,sources = ""
 			file.onreadystatechange = function () {
@@ -45,7 +46,26 @@
 			}
 			file.send(null);
 			// return allText
+            file2.open("GET","../flikes.txt",false);
+            file2.onreadystatechange = function () {
+				if (file2.readyState === 4) {
+					if (file2.status === 200 || file2.status == 0) {
+                        document.getElementById("facebook-likes").innerHTML = file2.responseText;
+                    }
+                }
+            }
+            file3.open("GET","../tweets.txt",false);
+            file3.onreadystatechange = function () {
+				if (file3.readyState === 4) {
+					if (file3.status === 200 || file3.status == 0) {
+                        document.getElementById("tweets").innerHTML = file3.responseText;
+                    }
+                }
+            }
 		}
+			file2.send(null);
+			file3.send(null);
+			// return allTex
 	</script>
 </head>
 
@@ -215,11 +235,11 @@
 								</div>
 								<div class="card-content">
 									<p class="category">Facebook Visits</p>
-									<h3 class="title">75</h3>
+									<h3 id="facebook-likes" class="title">75</h3>
 								</div>
 								<div class="card-footer">
 									<div class="stats">
-										<i class="material-icons">local_offer</i> Tracked from Github
+										<i class="material-icons">update</i> Tracked from valbot.com
 									</div>
 								</div>
 							</div>
@@ -231,12 +251,12 @@
 									<i class="fa fa-twitter"></i>
 								</div>
 								<div class="card-content">
-									<p class="category">Followers</p>
-									<h3 class="title">+245</h3>
+									<p class="category">Tweets</p>
+									<h3 id="tweets" class="title">+245</h3>
 								</div>
 								<div class="card-footer">
 									<div class="stats">
-										<i class="material-icons">update</i> Just Updated
+										<i class="material-icons">update</i> tracked from valbot.com
 									</div>
 								</div>
 							</div>

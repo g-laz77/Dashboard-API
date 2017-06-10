@@ -26,35 +26,27 @@ function display(req,res) {
             res.end();
           });
       }
+      if(req.url.indexOf('flikes.txt') != -1){
+          fs.readFile(__dirname + '/flikes.txt', function (err, data) {
+            if (err) console.log(err);
+            res.writeHead(200, {'Content-Type': 'text/txt'});
+            res.write(data);
+            res.end();
+          });
+      }
+      if(req.url.indexOf('tweets.txt') != -1){
+          fs.readFile(__dirname + '/tweets.txt', function (err, data) {
+            if (err) console.log(err);
+            res.writeHead(200, {'Content-Type': 'text/txt'});
+            res.write(data);
+            res.end();
+          });
+      }
     }
     if(req.url.indexOf('.html') != -1){ //req.url has the pathname, check if it conatins '.html'
       if(req.url.indexOf('/examples/dashboard.html') != -1){
         var domain = "";
-        fs.readFile('../url.txt', 'utf8', function (err,data) {
-          if (err) {
-            return console.log(err);
-          }
-          domain.concat(data);
-        });
-        var url = 'http://www.valbot.com/'.concat(domain);
-        request(url, function (error, response, body) {
-          console.log('error:', error); // Print the error if one occurred 
-          console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
-          var array = [];
-          var $ = cheerio.load(body);
-            $('div.panel').each(function(i, element){
-                //console.log(this)
-                var number = $(element).children().first().next().children().eq(0).text()
-                var name = $(element).children().first().next().children().eq(1).text()
-                var metadata = {
-                    Type: name,
-                    Number: number,
-                };
-                array.push(metadata)
-                
-            });
-            console.log(array);
-        });
+        
         fs.readFile(__dirname + '/examples/dashboard.html', function (err, data) {
           if (err) console.log(err);
           res.writeHead(200, {'Content-Type': 'text/html'});
@@ -181,14 +173,34 @@ function processAllFieldsOfTheForm(req, res) {
     var form = new formidable.IncomingForm();
     // #console.log("kk");  
     form.parse(req, function (err, fields, files) {
-        //Store the data from the fields in your data store.
-        //The data store could be a file or database or any other store based
-        //on your application.
-        // res.writeHead(200, {
-        //     'content-type': 'text/plain'
-        // });
-        // res.write('\n\n');
         fs.writeFileSync("url.txt",fields.ss);
+        url = 'http://www.valbot.com/'.concat(fields.ss);
+        console.log(url);
+        request(url, function (error, response, body) {
+          console.log('error:', error); // Print the error if one occurred 
+          console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
+          var array = [];
+          var $ = cheerio.load(body);
+            $('div.panel').each(function(i, element){
+                //console.log(this)
+                var number = $(element).children().first().next().children().eq(0).text()
+                var name = $(element).children().first().next().children().eq(1).text()
+                var metadata = {
+                    Type: name,
+                    Number: number,
+                };
+                if(name=="Facebook likes"){
+                  fs.writeFileSync("flikes.txt",number);
+                  console.log(number);
+                }
+                else if(name=="Tweets")
+                  fs.writeFileSync("tweets.txt",number);
+                //array.push(metadata)
+                
+            });
+            //console.log(array);
+            //fs.writeFileSync("social_media.txt",array);
+        });
         console.log("Form input submitted");
         //res.end()
         //res.send({redirectUrl: "/examples/dashboard.html"});

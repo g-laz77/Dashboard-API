@@ -351,7 +351,8 @@ function debounce(func, wait, immediate) {
 function readTextFile() {
 			var file = new XMLHttpRequest();
 			file.open("GET", "../url.txt", false);
-			
+			var file2 = new XMLHttpRequest();
+			var file3 = new XMLHttpRequest();
 			console.log(file.responseText)
 			var traffic,sources = ""
 			file.onreadystatechange = function () {
@@ -368,4 +369,22 @@ function readTextFile() {
 			}
 			file.send(null);
 			// return allText
+            file2.open("GET","../flikes.txt",false);
+            file2.onreadystatechange = function () {
+				if (file2.readyState === 4) {
+					if (file2.status === 200 || file2.status == 0) {
+                        document.getElementById("facebook-likes").innerHTML = file2.responseText;
+                    }
+                }
+            }
+            file3.open("GET","../tweets.txt",false);
+            file3.onreadystatechange = function () {
+				if (file3.readyState === 4) {
+					if (file3.status === 200 || file3.status == 0) {
+                        document.getElementById("tweets").innerHTML = file3.responseText;
+                    }
+                }
+            }
+            file2.send(null);
+            file3.send(null);
 		}
