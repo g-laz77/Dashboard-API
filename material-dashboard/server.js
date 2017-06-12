@@ -6,6 +6,9 @@ var request = require('request');
 var cheerio = require('cheerio');
 var formidable = require("formidable");
 var util = require('util');
+var sleep = require('sleep');
+
+
 const spawn = require('child_process').spawn;
 // Create a server
 http.createServer( function (request, response) {  
@@ -62,7 +65,7 @@ function display(req,res) {
     if(req.url.indexOf('.html') != -1){ //req.url has the pathname, check if it conatins '.html'
       if(req.url.indexOf('/examples/dashboard.html') != -1){
         var domain = "";
-        
+        //sleep.sleep(5);
         fs.readFile(__dirname + '/examples/dashboard.html', function (err, data) {
           if (err) console.log(err);
           res.writeHead(200, {'Content-Type': 'text/html'});
@@ -75,7 +78,9 @@ function display(req,res) {
           if (err) console.log(err);
           res.writeHead(200, {'Content-Type': 'text/html'});
           res.write(data);
+          
           res.end();
+          //sleep.sleep(5);
         });
       }
       if(req.url.indexOf('/examples/index.html') != -1){
@@ -240,13 +245,15 @@ function processAllFieldsOfTheForm(req, res) {
                 }
             });
         });
-        console.log("Form input submitted");
+        
         //res.end()
         //res.send({redirectUrl: "/examples/dashboard.html"});
-        res.writeHead(200, {
-        'Location': 'examples/dashboard.html'
-  //add other headers here...
-        });
+//        sleep.sleep(2); // sleep for ten seconds
+
+        res.writeHead(302, {
+            'Location': '/examples/sample.html'
+            });
+        //res.end();
         res.end();
 
     });

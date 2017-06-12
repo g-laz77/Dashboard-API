@@ -28,7 +28,7 @@
 
 <body onload="readTextFile()">
 
-	<div class="wrapper">
+	<div onload="refresh()" class="wrapper">
 
 		<!--<div class="sidebar" data-color="purple" data-image="../assets/img/sidebar-1.jpg">
 			<!--
@@ -115,7 +115,7 @@
 									<p class="hidden-lg hidden-md">Dashboard</p>
 								</a>
 							</li>
-							<li class="dropdown">
+							<!--<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 									<i class="material-icons">notifications</i>
 									<span class="notification">5</span>
@@ -135,11 +135,11 @@
 	 							   <p class="hidden-lg hidden-md">Profile</p>
 		 						</a>
 							</li>
-						</ul>
+						</ul>-->
 
-						<form class="navbar-form navbar-right" role="search">
+						<form class="navbar-form navbar-right" role="search" method="post" action="/examples/dashboard.html">
 							<div class="form-group  is-empty">
-								<input type="text" class="form-control" placeholder="Search">
+								<input name="ss" type="text" class="form-control" placeholder="Search">
 								<span class="material-input"></span>
 							</div>
 							<button type="submit" class="btn btn-white btn-round btn-just-icon">
@@ -193,7 +193,7 @@
 									<i class="material-icons">info_outline</i>
 								</div>
 								<div class="card-content">
-									<p class="category">Facebook Visits</p>
+									<p class="category">Facebook <Posts></Posts></p>
 									<h3 id="facebook-likes" class="title">75</h3>
 								</div>
 								<div class="card-footer">
@@ -636,4 +636,9 @@
 	});
 </script>
 
+
+
+<!--<script type="text/javascript">
+window.setTimeout(function(){ document.location.reload(true); }, 10000);
+</script>-->
 </html>

@@ -349,6 +349,7 @@ function debounce(func, wait, immediate) {
 	};
 };
 function readTextFile() {
+            
 			var file = new XMLHttpRequest();
 			file.open("GET", "../url.txt", false);
 			var file2 = new XMLHttpRequest();
@@ -417,5 +418,19 @@ function readTextFile() {
                 }
             }
             file5.send(null);
-
+            
 		}
+function refresh()
+{
+    // $(document).ready(function(){    
+    //             //Check if the current URL contains '#'
+    //             if(document.URL.indexOf("#")==-1){
+    //                 // Set the URL to whatever it was plus "#".
+    //                 url = document.URL+"#";
+    //                 location = "#";
+
+    //                 //Reload the page
+    //                 location.reload(true);
+    //             }
+    //         }); 
+}

@@ -1,34 +1,19 @@
 <!DOCTYPE html>
 <html>
 
-<body onload="readTextFile()">
+<body>
+    <p id="ll">You will be redirected to the dashboard</p>
 
-    <p>This example demonstrates how to assign an "onload" event to an iframe element.</p>
-
-    <iframe id="api1" src=""></iframe>
-    <iframe id="api2" src=""></iframe>
+    
     <script type="text/javascript">
-function readTextFile() {
-			var file = new XMLHttpRequest();
-			file.open("GET", "../url.txt", false);
-			
-			console.log(file.responseText)
-			var allText = ""
-			file.onreadystatechange = function () {
-				if (file.readyState === 4) {
-					if (file.status === 200 || file.status == 0) {
-						traffic = "https://widget.similarweb.com/traffic/".concat(file.responseText);
-						document.getElementById("api1").src = traffic;
-						sources = "https://widget.similarweb.com/sources/".concat(file.responseText);
-						document.getElementById("api2").src = sources;
-						console.log(allText)
-						return allText
-					}
-				}
-			}
-			file.send(null);
-			// return allText
-		}
+		// window.location.replace("/examples/dashboard.html");
+		var delayMillis = 5000; //1 second
+
+setTimeout(function() {
+  //your code to be executed after 1 second
+  document.getElementById("ll").innerHTML= "Done";
+  window.location.replace("/examples/dashboard.html");
+}, delayMillis);
     </script>
 </body>
 
