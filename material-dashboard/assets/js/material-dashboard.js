@@ -353,7 +353,8 @@ function readTextFile() {
 			file.open("GET", "../url.txt", false);
 			var file2 = new XMLHttpRequest();
 			var file3 = new XMLHttpRequest();
-			console.log(file.responseText)
+			var file4 = new XMLHttpRequest();
+			// console.log(file.responseText)
 			var traffic,sources = ""
 			file.onreadystatechange = function () {
 				if (file.readyState === 4) {
@@ -377,6 +378,7 @@ function readTextFile() {
                     }
                 }
             }
+            file2.send(null);
             file3.open("GET","../tweets.txt",false);
             file3.onreadystatechange = function () {
 				if (file3.readyState === 4) {
@@ -385,6 +387,22 @@ function readTextFile() {
                     }
                 }
             }
-            file2.send(null);
             file3.send(null);
+			file4.open("GET","../seo.txt",false);
+            file4.onreadystatechange = function () {
+				if (file4.readyState === 4) {
+					if (file4.status === 200 || file4.status == 0) {
+                        var lines = file4.responseText.split('\n');
+                        document.getElementById("yip").innerHTML = lines[1];                        
+                        document.getElementById("gip").innerHTML = lines[0];
+                        document.getElementById("bip").innerHTML = lines[2];
+                        
+                    }
+                }
+            }
+            file4.send(null);
+
 		}
+			
+			
+			

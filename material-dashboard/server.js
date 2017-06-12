@@ -34,6 +34,14 @@ function display(req,res) {
             res.end();
           });
       }
+      if(req.url.indexOf('seo.txt') != -1){
+          fs.readFile(__dirname + '/seo.txt', function (err, data) {
+            if (err) console.log(err);
+            res.writeHead(200, {'Content-Type': 'text/txt'});
+            res.write(data);
+            res.end();
+          });
+      }
       if(req.url.indexOf('tweets.txt') != -1){
           fs.readFile(__dirname + '/tweets.txt', function (err, data) {
             if (err) console.log(err);

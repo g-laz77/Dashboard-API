@@ -24,49 +24,6 @@
 	<!--     Fonts and icons     -->
 	<link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
 	<link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
-	<script type="text/javascript">
-		function readTextFile() {
-			var file = new XMLHttpRequest();
-			file.open("GET", "../url.txt", false);
-			var file2 = new XMLHttpRequest();
-			var file3 = new XMLHttpRequest();
-			console.log(file.responseText)
-			var traffic,sources = ""
-			file.onreadystatechange = function () {
-				if (file.readyState === 4) {
-					if (file.status === 200 || file.status == 0) {
-						traffic = "https://widget.similarweb.com/traffic/".concat(file.responseText);
-						document.getElementById("api1").src = traffic;
-						sources = "https://widget.similarweb.com/sources/".concat(file.responseText);
-						document.getElementById("api2").src = sources;
-						// console.log(allText)
-						// return allText
-					}
-				}
-			}
-			file.send(null);
-			// return allText
-            file2.open("GET","../flikes.txt",false);
-            file2.onreadystatechange = function () {
-				if (file2.readyState === 4) {
-					if (file2.status === 200 || file2.status == 0) {
-                        document.getElementById("facebook-likes").innerHTML = file2.responseText;
-                    }
-                }
-            }
-            file3.open("GET","../tweets.txt",false);
-            file3.onreadystatechange = function () {
-				if (file3.readyState === 4) {
-					if (file3.status === 200 || file3.status == 0) {
-                        document.getElementById("tweets").innerHTML = file3.responseText;
-                    }
-                }
-            }
-		}
-			file2.send(null);
-			file3.send(null);
-			// return allTex
-	</script>
 </head>
 
 <body onload="readTextFile()">
@@ -575,27 +532,27 @@
 											<tr>
 												<td>1</td>
 												<td>Google Indexed Pages</td>
-												<!--<td>$36,738</td>
-												<td>Niger</td>-->
+												<td id="gip">$36,738</td>
+												<!--<td>Niger</td>-->
 											</tr>
 											<tr>
 												<td>2</td>
 												<td>Yahoo Indexed Pages</td>
-												<!--<td>$23,789</td>
-												<td>Curaçao</td>-->
+												<td id="yip">$23,789</td>
+												<!--<td>Curaçao</td>-->
 											</tr>
 											<tr>
 												<td>3</td>
 												<td>Bing Indexed Pages</td>
-												<!--<td>$56,142</td>
-												<td>Netherlands</td>-->
+												<td id="bip">$56,142</td>
+												<!--<td>Netherlands</td>-->
 											</tr>
-											<tr>
+											<!--<tr>
 												<td>4</td>
 												<td>Backlinks</td>
 												<!--<td>$38,735</td>
-												<td>Korea, South</td>-->
-											</tr>
+												<td>Korea, South</td>
+											</tr>-->
 										</tbody>
 									</table>
 								</div>
