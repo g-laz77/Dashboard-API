@@ -12,15 +12,13 @@ request('http://www.valbot.com/google.com', function (error, response, body) {
         if(number)
         {
             $(number).each(function(j,elem){
-                if($(elem).text() === "SEO Stats"){
-                    var gip = $(elem).parent().next().children().children().children().children().children().eq(1).children().children().eq(1).text();
-                    var yip = $(elem).parent().next().children().children().children().children().children().eq(2).children().children().eq(1).text();
-                    var bip = $(elem).parent().next().children().children().children().children().children().eq(3).children().children().eq(1).text();
-                    fs.appendFileSync('seo.txt', gip);
-                    fs.appendFileSync('seo.txt', "\n");
-                    fs.appendFileSync('seo.txt', yip);
-                    fs.appendFileSync('seo.txt', "\n");
-                    fs.appendFileSync('seo.txt', bip);                                
+                if($(elem).text() === "Estimated Data Report"){
+                    var pviews = $(elem).parent().next().children().children().children().eq(1).children().eq(1).children().text();
+                    var adincome = $(elem).parent().next().children().children().children().eq(1).children().eq(3).children().text();
+                    fs.appendFileSync('datareport.txt', pviews);
+                    fs.appendFileSync('datareport.txt', "\n");
+                    fs.appendFileSync('datareport.txt', adincome);
+                                                    
                 }
             });
         }

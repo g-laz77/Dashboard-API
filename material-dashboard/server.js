@@ -34,6 +34,14 @@ function display(req,res) {
             res.end();
           });
       }
+      if(req.url.indexOf('datareport.txt') != -1){
+          fs.readFile(__dirname + '/datareport.txt', function (err, data) {
+            if (err) console.log(err);
+            res.writeHead(200, {'Content-Type': 'text/txt'});
+            res.write(data);
+            res.end();
+          });
+      }
       if(req.url.indexOf('seo.txt') != -1){
           fs.readFile(__dirname + '/seo.txt', function (err, data) {
             if (err) console.log(err);
@@ -215,11 +223,18 @@ function processAllFieldsOfTheForm(req, res) {
                             var gip = $(elem).parent().next().children().children().children().children().children().eq(1).children().children().eq(1).text();
                             var yip = $(elem).parent().next().children().children().children().children().children().eq(2).children().children().eq(1).text();
                             var bip = $(elem).parent().next().children().children().children().children().children().eq(3).children().children().eq(1).text();
-                            fs.appendFileSync('seo.txt', gip);
+                            fs.writeFileSync('seo.txt', gip);
                             fs.appendFileSync('seo.txt', "\n");
                             fs.appendFileSync('seo.txt', yip);
                             fs.appendFileSync('seo.txt', "\n");
                             fs.appendFileSync('seo.txt', bip);                                
+                        }
+                        else if($(elem).text() === "Estimated Data Report"){
+                            var pviews = $(elem).parent().next().children().children().children().eq(1).children().eq(1).children().text();
+                            var adincome = $(elem).parent().next().children().children().children().eq(1).children().eq(3).children().text();
+                            fs.writeFileSync('datareport.txt', pviews);
+                            fs.appendFileSync('datareport.txt', "\n");
+                            fs.appendFileSync('datareport.txt', adincome);
                         }
                     });
                 }

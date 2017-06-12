@@ -354,6 +354,8 @@ function readTextFile() {
 			var file2 = new XMLHttpRequest();
 			var file3 = new XMLHttpRequest();
 			var file4 = new XMLHttpRequest();
+			var file5 = new XMLHttpRequest();
+            
 			// console.log(file.responseText)
 			var traffic,sources = ""
 			file.onreadystatechange = function () {
@@ -401,8 +403,19 @@ function readTextFile() {
                 }
             }
             file4.send(null);
+            //file5.send(null);
+            file5.open("GET","../datareport.txt",false);
+            file5.onreadystatechange = function () {
+				if (file5.readyState === 4) {
+					if (file5.status === 200 || file5.status == 0) {
+                        var lines = file5.responseText.split('\n');
+                        document.getElementById("pviews").innerHTML = lines[0];                        
+                        document.getElementById("adincome").innerHTML = lines[1];
+                        //document.getElementById("bip").innerHTML = lines[2];
+                        
+                    }
+                }
+            }
+            file5.send(null);
 
 		}
-			
-			
-			
