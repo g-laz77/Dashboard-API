@@ -29,6 +29,14 @@ function display(req,res) {
             res.end();
           });
       }
+      if(req.url.indexOf('gen.txt') != -1){
+          fs.readFile(__dirname + '/gen.txt', function (err, data) {
+            if (err) console.log(err);
+            res.writeHead(200, {'Content-Type': 'text/txt'});
+            res.write(data);
+            res.end();
+          });
+      }
       if(req.url.indexOf('flikes.txt') != -1){
           fs.readFile(__dirname + '/flikes.txt', function (err, data) {
             if (err) console.log(err);
@@ -196,7 +204,7 @@ function processAllFieldsOfTheForm(req, res) {
     form.parse(req, function (err, fields, files) {
         fs.writeFileSync("url.txt",fields.ss);
         url = 'http://www.valbot.com/'.concat(fields.ss);
-        console.log(url);
+        //console.log(url);
         request(url, function (error, response, body) {
           console.log('error:', error); // Print the error if one occurred 
           console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
@@ -244,8 +252,34 @@ function processAllFieldsOfTheForm(req, res) {
                     });
                 }
             });
+          
         });
-        
+        request('http://website.informer.com/'+fields.ss, function (error, response, body) {
+          
+          console.log('error:', error); // Print the error if one occurred 
+          console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
+          var array = [];
+          var $ = cheerio.load(body);
+            $('#description').each(function(i, element){
+                var k = $(element).text();
+                var title = $(element).prev().text();
+                title = title.trim();
+                console.log(title);
+                k = k.trim();
+                fs.writeFileSync("gen.txt",title);
+                fs.appendFileSync("gen.txt","\n"+k+"\n");
+                //console.log(k);
+            });
+            $('#alexa_rank').each(function(i, element){
+                var k = $(element).children().text();
+                k = k.trim();
+                fs.appendFileSync("gen.txt",k);
+                fs.appendFileSync("gen.txt","\n");
+                //console.log(k);
+            });
+            //console.log(array);
+      });
+
         //res.end()
         //res.send({redirectUrl: "/examples/dashboard.html"});
 //        sleep.sleep(2); // sleep for ten seconds

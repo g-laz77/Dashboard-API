@@ -356,6 +356,7 @@ function readTextFile() {
 			var file3 = new XMLHttpRequest();
 			var file4 = new XMLHttpRequest();
 			var file5 = new XMLHttpRequest();
+			var file6 = new XMLHttpRequest();
             
 			// console.log(file.responseText)
 			var traffic,sources = ""
@@ -418,19 +419,17 @@ function readTextFile() {
                 }
             }
             file5.send(null);
-            
+            file6.open("GET","../gen.txt",false);
+            file6.onreadystatechange = function () {
+				if (file6.readyState === 4) {
+					if (file6.status === 200 || file6.status == 0) {
+                        var lines = file6.responseText.split('\n');
+                        document.getElementById("gen").innerHTML = lines[1];                        
+                        document.getElementById("head").innerHTML = lines[0];
+                        //document.getElementById("alexa").innerHTML = lines[2];
+                        document.getElementById("rank").innerHTML = lines[2];
+                    }
+                }
+            }
+            file6.send(null);
 		}
-function refresh()
-{
-    // $(document).ready(function(){    
-    //             //Check if the current URL contains '#'
-    //             if(document.URL.indexOf("#")==-1){
-    //                 // Set the URL to whatever it was plus "#".
-    //                 url = document.URL+"#";
-    //                 location = "#";
-
-    //                 //Reload the page
-    //                 location.reload(true);
-    //             }
-    //         }); 
-}
