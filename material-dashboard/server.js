@@ -277,13 +277,16 @@ function processAllFieldsOfTheForm(req, res) {
                 fs.appendFileSync("gen.txt","\n");
                 //console.log(k);
             });
-            //console.log(array);
+            $('table.domenGenTable').each(function(i,element){
+                var owner = $(element).children().children().eq(2).children().children().text();
+                var domain = $(element).children().children().eq(3).children().children().text();
+                var registrar = $(element).children().children().eq(4).children().eq(1).text();
+                console.log(registrar);
+                fs.appendFileSync("gen.txt",domain+"\n"+owner+"\n"+registrar+"\n");
+            });
       });
 
-        //res.end()
-        //res.send({redirectUrl: "/examples/dashboard.html"});
-//        sleep.sleep(2); // sleep for ten seconds
-
+        
         res.writeHead(302, {
             'Location': '/examples/sample.html'
             });

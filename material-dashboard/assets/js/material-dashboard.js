@@ -426,8 +426,11 @@ function readTextFile() {
                         var lines = file6.responseText.split('\n');
                         document.getElementById("gen").innerHTML = lines[1];                        
                         document.getElementById("head").innerHTML = lines[0];
-                        //document.getElementById("alexa").innerHTML = lines[2];
+                        document.getElementById("domain").innerHTML = lines[3];
                         document.getElementById("rank").innerHTML = lines[2];
+                        document.getElementById("owner").innerHTML = lines[4];
+                        document.getElementById("registrar").innerHTML = lines[5];
+                        
                     }
                 }
             }

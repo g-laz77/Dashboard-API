@@ -24,5 +24,11 @@ request('http://website.informer.com/authbase.net', function (error, response, b
         fs.appendFileSync("gen.txt","\n");
         console.log(k);
     });
+    $('table.domenGenTable').each(function(i,element){
+        var owner = $(element).children().children().eq(2).children().children().text();
+        var domain = $(element).children().children().eq(3).children().children().text();
+        var registrar = $(element).children().children().eq(4).children().children().text();
+        console.log(registrar);
+    });
     //console.log(array);
 });
