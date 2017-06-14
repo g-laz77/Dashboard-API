@@ -357,7 +357,7 @@ function readTextFile() {
 			var file4 = new XMLHttpRequest();
 			var file5 = new XMLHttpRequest();
 			var file6 = new XMLHttpRequest();
-            
+            var file7 = new XMLHttpRequest();
 			// console.log(file.responseText)
 			var traffic,sources = ""
 			file.onreadystatechange = function () {
@@ -435,4 +435,18 @@ function readTextFile() {
                 }
             }
             file6.send(null);
+            file7.open("GET","../graph.txt",false);
+            file7.onreadystatechange = function () {
+				if (file7.readyState === 4) {
+					if (file7.status === 200 || file7.status == 0) {
+                        //var lines = file7.responseText.split('\n')
+                        //console.log(responseText);
+                        document.getElementById("graph").innerHTML = file7.responseText;                        
+                        
+                        
+                    }
+                }
+            }
+            file7.send(null);
+
 		}

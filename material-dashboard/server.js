@@ -37,6 +37,14 @@ function display(req,res) {
             res.end();
           });
       }
+      if(req.url.indexOf('graph.txt') != -1){
+          fs.readFile(__dirname + '/graph.txt', function (err, data) {
+            if (err) console.log(err);
+            res.writeHead(200, {'Content-Type': 'text/txt'});
+            res.write(data);
+            res.end();
+          });
+      }
       if(req.url.indexOf('flikes.txt') != -1){
           fs.readFile(__dirname + '/flikes.txt', function (err, data) {
             if (err) console.log(err);
@@ -81,6 +89,7 @@ function display(req,res) {
           res.end();
         });
       }
+      
       if(req.url.indexOf('/examples/sample.html') != -1){
         fs.readFile(__dirname + '/examples/sample.html', function (err, data) {
           if (err) console.log(err);
@@ -285,7 +294,19 @@ function processAllFieldsOfTheForm(req, res) {
                 fs.appendFileSync("gen.txt",domain+"\n"+owner+"\n"+registrar+"\n");
             });
       });
-
+      request('http://socialrankz.com/'+fields.ss, function (error, response, body) {
+        console.log('error:', error); // Print the error if one occurred 
+        console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
+        var $ = cheerio.load(body);
+        var i = 0;
+          $('table.tableinner').each(function(i, element){
+              if(i == 0)
+              {
+                  fs.writeFileSync("graph.txt",$(element).parent().parent().html().trim());
+                  i = 1;
+              }
+          });
+      });
         
         res.writeHead(302, {
             'Location': '/examples/sample.html'
