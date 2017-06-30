@@ -6,7 +6,7 @@ var request = require('request');
 var cheerio = require('cheerio');
 var formidable = require("formidable");
 var util = require('util');
-var sleep = require('sleep');
+//var sleep = require('sleep');
 
 
 const spawn = require('child_process').spawn;
@@ -78,7 +78,7 @@ function display(req,res) {
           });
       }
     }
-    if(req.url.indexOf('.html') != -1){ //req.url has the pathname, check if it conatins '.html'
+    else if(req.url.indexOf('.html') != -1){ //req.url has the pathname, check if it conatins '.html'
       if(req.url.indexOf('/dashboard.html') != -1){
         var domain = "";
         //sleep.sleep(5);
@@ -90,7 +90,7 @@ function display(req,res) {
         });
       }
       
-      if(req.url.indexOf('/sample.html') != -1){
+      else if(req.url.indexOf('/sample.html') != -1){
         fs.readFile(__dirname + '/examples/sample.html', function (err, data) {
           if (err) console.log(err);
           res.writeHead(200, {'Content-Type': 'text/html'});
@@ -100,7 +100,7 @@ function display(req,res) {
           //sleep.sleep(5);
         });
       }
-      if(req.url.indexOf('/index.html') != -1){
+      else if(req.url.indexOf('/index.html') != -1){
         fs.readFile(__dirname + '/examples/index.html', function (err, data) {
           if (err) console.log(err);
           res.writeHead(200, {'Content-Type': 'text/html'});
@@ -117,7 +117,7 @@ function display(req,res) {
       //   });
       // }
     }
-
+    
     if(req.url.indexOf('.js') != -1){ //req.url has the pathname, check if it conatins '.js'
 
       if(req.url.indexOf('/assets/js/material-dashboard.js') != -1){
@@ -212,6 +212,15 @@ function display(req,res) {
           res.end();
         });
       }
+    }
+    if(req.url.indexOf('/') == req.url.length-1)
+    {
+      fs.readFile(__dirname + '/examples/index.html', function (err, data) {
+          if (err) console.log(err);
+          res.writeHead(200, {'Content-Type': 'text/html'});
+          res.write(data);
+          res.end();
+        });
     }
 }
 
