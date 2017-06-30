@@ -17,7 +17,7 @@ http.createServer( function (request, response) {
     } else if (request.method.toLowerCase() == 'post') {
         processAllFieldsOfTheForm(request, response);
     }
-}).listen(1339);
+}).listen(3000);
 
 function display(req,res) {
     if(req.url.indexOf('.txt') != -1){ //req.url has the pathname, check if it conatins '.html'
@@ -79,7 +79,7 @@ function display(req,res) {
       }
     }
     if(req.url.indexOf('.html') != -1){ //req.url has the pathname, check if it conatins '.html'
-      if(req.url.indexOf('/examples/dashboard.html') != -1){
+      if(req.url.indexOf('/dashboard.html') != -1){
         var domain = "";
         //sleep.sleep(5);
         fs.readFile(__dirname + '/examples/dashboard.html', function (err, data) {
@@ -90,7 +90,7 @@ function display(req,res) {
         });
       }
       
-      if(req.url.indexOf('/examples/sample.html') != -1){
+      if(req.url.indexOf('/sample.html') != -1){
         fs.readFile(__dirname + '/examples/sample.html', function (err, data) {
           if (err) console.log(err);
           res.writeHead(200, {'Content-Type': 'text/html'});
@@ -100,7 +100,7 @@ function display(req,res) {
           //sleep.sleep(5);
         });
       }
-      if(req.url.indexOf('/examples/index.html') != -1){
+      if(req.url.indexOf('/index.html') != -1){
         fs.readFile(__dirname + '/examples/index.html', function (err, data) {
           if (err) console.log(err);
           res.writeHead(200, {'Content-Type': 'text/html'});
@@ -108,6 +108,14 @@ function display(req,res) {
           res.end();
         });
       }
+      // if(req.url.indexOf('/') != -1){
+      //   fs.readFile(__dirname + '/examples/index.html', function (err, data) {
+      //     if (err) console.log(err);
+      //     res.writeHead(200, {'Content-Type': 'text/html'});
+      //     res.write(data);
+      //     res.end();
+      //   });
+      // }
     }
 
     if(req.url.indexOf('.js') != -1){ //req.url has the pathname, check if it conatins '.js'
@@ -213,7 +221,7 @@ function processAllFieldsOfTheForm(req, res) {
     form.parse(req, function (err, fields, files) {
         fs.writeFileSync("url.txt",fields.ss);
         url = 'http://www.valbot.com/'.concat(fields.ss);
-        //console.log(url);
+        console.log(url);
         request(url, function (error, response, body) {
           console.log('error:', error); // Print the error if one occurred 
           console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
@@ -309,7 +317,7 @@ function processAllFieldsOfTheForm(req, res) {
       });
         
         res.writeHead(302, {
-            'Location': '/examples/sample.html'
+            'Location': '/sample.html'
             });
         //res.end();
         res.end();
