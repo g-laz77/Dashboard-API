@@ -108,14 +108,22 @@ function display(req,res) {
           res.end();
         });
       }
-      // if(req.url.indexOf('/') != -1){
-      //   fs.readFile(__dirname + '/examples/index.html', function (err, data) {
-      //     if (err) console.log(err);
-      //     res.writeHead(200, {'Content-Type': 'text/html'});
-      //     res.write(data);
-      //     res.end();
-      //   });
-      // }
+       if(req.url.indexOf('/historical.html') != -1){
+        fs.readFile(__dirname + '/examples/historical.html', function (err, data) {
+          if (err) console.log(err);
+          res.writeHead(200, {'Content-Type': 'text/txt'});
+          res.write(data);
+          res.end();
+        });
+      }
+      if(req.url.indexOf('/graph.html') != -1){
+        fs.readFile(__dirname + '/examples/graph.html', function (err, data) {
+          if (err) console.log(err);
+          res.writeHead(200, {'Content-Type': 'text/html'});
+          res.write(data);
+          res.end();
+        });
+      }
     }
     
     if(req.url.indexOf('.js') != -1){ //req.url has the pathname, check if it conatins '.js'
@@ -324,12 +332,30 @@ function processAllFieldsOfTheForm(req, res) {
               }
           });
       });
-        
-        res.writeHead(302, {
-            'Location': '/sample.html'
-            });
-        //res.end();
-        res.end();
+      request('http://socialrankz.com/facebook.com', function (error, response, body) {
+        //console.log('error:', error); // Print the error if one occurred 
+        //console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
+        var $ = cheerio.load(body);
+        var i =0;
+          $('.icon').each(function(i, element){
+                  temp = ($(element).attr('src'));
+                  if(temp == 'http://socialrankz.com/history.png')
+                  {
+                      trow = $(element).parent().parent().parent().next().html();
+                      //console.log(trow);
+                      fs.writeFileSync("examples/graph.html",trow);
+                      trow = $(element).parent().parent().parent().next().children().eq(1).html();
+                      //console.log(trow);
+                      fs.writeFileSync("examples/historical.html",trow);
+                  }
+          });
+      });
+      
+      res.writeHead(302, {
+          'Location': '/sample.html'
+          });
+      //res.end();
+      res.end();
 
     });
 }
